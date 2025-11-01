@@ -316,16 +316,8 @@
                 if (instantFeedback && !answeredQuestions[questions[currentQuestionIndex].id]) {
                     // En mode feedback instantané, valider d'abord la réponse
                     validateCurrentAnswer();
-                    
-                    setTimeout(() => {
-                        if (currentQuestionIndex < questions.length - 1) {
-                            setCurrentQuestionIndex(currentQuestionIndex + 1);
-                        } else {
-                            calculateScore();
-                        }
-                    }, 1500);
                 } else {
-                    // En mode normal ou si déjà répondu
+                    // En mode normal ou si déjà répondu, passer à la suivante
                     if (currentQuestionIndex < questions.length - 1) {
                         setCurrentQuestionIndex(currentQuestionIndex + 1);
                     } else {
@@ -872,7 +864,11 @@ Option incorrecte
                                         disabled={currentAnswers.length === 0}
                                         className="flex-1 bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 transition disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
                                     >
-                                        {currentQuestionIndex === questions.length - 1 ? 'Terminer' : 'Suivant'}
+                                        {instantFeedback && !questionAnswered 
+                                            ? 'Valider' 
+                                            : currentQuestionIndex === questions.length - 1 
+                                                ? 'Terminer' 
+                                                : 'Suivant'}
                                     </button>
                                 </div>
                             </div>
